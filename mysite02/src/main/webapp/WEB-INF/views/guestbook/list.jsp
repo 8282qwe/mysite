@@ -1,4 +1,9 @@
+<%@ page import="mysite.vo.GuestbookVo" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%
+	List<GuestbookVo> list = (List<GuestbookVo>) request.getAttribute("list");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,15 +16,15 @@
 		<jsp:include page="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="guestbook">
-				<form action="/guestbook" method="post">
+				<form action="<%=request.getContextPath()%>/guestbook" method="post">
 					<input type="hidden" name="a" value="insert">
 					<table>
 						<tr>
 							<td>이름</td><td><input type="text" name="name"></td>
-							<td>비밀번호</td><td><input type="password" name="pass"></td>
+							<td>비밀번호</td><td><input type="password" name="password"></td>
 						</tr>
 						<tr>
-							<td colspan=4><textarea name="content" id="content"></textarea></td>
+							<td colspan=4><textarea name="contents" id="content"></textarea></td>
 						</tr>
 						<tr>
 							<td colspan=4 align=right><input type="submit" VALUE=" 확인 "></td>
@@ -28,21 +33,23 @@
 				</form>
 				<ul>
 					<li>
-						<table>
+						<% for (int i = 0; i < list.size(); i++) { %>
+						<br>
+						<table width=510 border=1>
 							<tr>
-								<td>[4]</td>
-								<td>안대혁</td>
-								<td>2015-11-10 11:22:30</td>
-								<td><a href="">삭제</a></td>
+								<td>[<%=list.size() - i%>]</td>
+								<td><%=list.get(i).getName()%>
+								</td>
+								<td><%=list.get(i).getRegDate()%>
+								</td>
+								<td><a href="<%=request.getContextPath()%>/guestbook?a=deleteform&id=<%=list.get(i).getId()%>">삭제</a></td>
 							</tr>
 							<tr>
-								<td colspan=4>
-								안녕하세요. ^^;<br>
-								하하하하	
+								<td colspan=4><%=list.get(i).getContents().replaceAll("\n", "<br>")%>
 								</td>
 							</tr>
 						</table>
-						<br>
+						<%}%>
 					</li>
 				</ul>
 			</div>
