@@ -81,16 +81,15 @@ public class UserDao extends MyConnection {
 
         try (
                 Connection conn = getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(vo.getPassword().isEmpty() ? "update user set name = ?,email = ?, gender = ? where id=?;" : "update user set name = ?,email = ?, gender = ?,password = ? where id=?;");
+                PreparedStatement pstmt = conn.prepareStatement(vo.getPassword().isEmpty() ? "update user set name = ?, gender = ? where id=?;" : "update user set name = ?, gender = ?,password = ? where id=?;");
         ) {
             int i = 1;
             pstmt.setString(i++, vo.getName());
-            pstmt.setString(i++, vo.getEmail());
             pstmt.setString(i++, vo.getGender());
             if (!vo.getPassword().isEmpty()) {
                 pstmt.setString(i++, vo.getPassword());
             }
-            pstmt.setLong(i++, vo.getId());
+            pstmt.setLong(i, vo.getId());
 
             result = pstmt.executeUpdate();
         } catch (SQLException e) {

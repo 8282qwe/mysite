@@ -19,13 +19,12 @@
 			<div id="user">
 
 				<form id="join-form" name="joinForm" method="post" action="<%=request.getContextPath()%>/user">
-					<input type="hidden" name="id" value="<%=vo.getId()%>">
 					<input type="hidden" name="a" value="update">
 					<label class="block-label" for="name">이름</label>
 					<input id="name" name="name" type="text" value="<%=Optional.ofNullable(vo.getName()).orElse("")%>">
 
-					<label class="block-label" for="email">이메일</label>
-					<input id="email" name="email" type="text" value="<%=Optional.ofNullable(vo.getEmail()).orElse("")%>">
+					<label class="block-label">이메일</label>
+					<h4><%=Optional.ofNullable(vo.getEmail()).orElse("")%></h4>
 					<input type="button" value="id 중복체크">
 					
 					<label class="block-label">패스워드</label>
