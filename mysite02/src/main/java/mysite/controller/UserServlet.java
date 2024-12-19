@@ -1,43 +1,32 @@
 package mysite.controller;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import mysite.dao.UserDao;
-import mysite.vo.UserVo;
+import mysite.controller.action.ActionServlet;
+import mysite.controller.action.user.LogoutAction;
+import mysite.controller.action.user.UpdateFormAction;
+import mysite.controller.action.main.MainAction;
+import mysite.controller.action.user.*;
 
-import java.io.IOException;
+import java.io.Serial;
+import java.util.Map;
 
 @WebServlet("/user")
-public class UserServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+public class UserServlet extends ActionServlet {
+
+    @Serial
+    private static final long serialVersionUID = 7234473671816624065L;
+
+    private Map<String, Action> mapAction = Map.of("joinform", new JoinFormAction(),
+            "join", new JoinAction(),
+            "joinsuccess", new JoinSuccessAction(),
+            "loginform", new LoginFormAction(),
+            "login", new LoginAction(),
+            "logout", new LogoutAction(),
+            "updateform", new UpdateFormAction(),
+            "update", new UpdateAction());
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
-
-        String action = req.getParameter("a");
-        // /user?a=joinform
-        if ("joinform".equalsIgnoreCase(action)) {
-            req.getRequestDispatcher("/WEB-INF/views/user/joinform.jsp").forward(req, resp);
-        } else if ("join".equals(action)) { // /user?a=join(POST)
-            String name = req.getParameter("name");
-            String password = req.getParameter("password");
-            String email = req.getParameter("email");
-            String gender = req.getParameter("gender");
-
-            if (new UserDao().insert(new UserVo(name, email, password, gender)) == 1) {
-                resp.sendRedirect(req.getContextPath()+"/user?a=joinsuccess");
-            }
-        } else if ("joinsuccess".equals(action)) { // /user?a=joinsuccess
-            req.getRequestDispatcher("/WEB-INF/views/user/joinsuccess.jsp").forward(req, resp);
-        }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req, resp);
+    protected Action getAction(String actionName) {
+        return mapAction.getOrDefault(actionName, new MainAction());
     }
 }

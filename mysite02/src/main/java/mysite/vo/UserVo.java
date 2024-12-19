@@ -65,4 +65,16 @@ public class UserVo {
     public void setJoin_date(String join_date) {
         this.join_date = join_date;
     }
+
+    @Override
+    public String toString() {
+        return "UserVo{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", gender='" + gender + '\'' +
+                ", join_date='" + join_date + '\'' +
+                '}';
+    }
 }
