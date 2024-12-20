@@ -40,7 +40,7 @@
 						<br>
 						<table width=510 border=1>
 							<tr>
-								<td>[${listCount-index.count}]</td>
+								<td>[${listCount-index.count+1}]</td>
 								<td>${vo.name}
 								</td>
 								<td>${vo.regDate}
