@@ -12,10 +12,7 @@ public class UserDao extends MyConnection {
     public int insert(UserVo vo) {
         int result = 0;
 
-        try (
-                Connection conn = getConnection();
-                PreparedStatement pstmt = conn.prepareStatement("insert into user values (null,?,?,?,?,now());");
-        ) {
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement("insert into user values (null,?,?,?,?,now());");) {
             pstmt.setString(1, vo.getName());
             pstmt.setString(2, vo.getEmail());
             pstmt.setString(3, vo.getPassword());
@@ -31,10 +28,7 @@ public class UserDao extends MyConnection {
     public UserVo findByEmailAndPassword(String email, String password) {
         UserVo vo = null;
 
-        try (
-                Connection conn = getConnection();
-                PreparedStatement pstmt = conn.prepareStatement("select id,name from user where email=? and password=?;");
-        ) {
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement("select id,name from user where email=? and password=?;");) {
             pstmt.setString(1, email);
             pstmt.setString(2, password);
 
@@ -54,10 +48,7 @@ public class UserDao extends MyConnection {
     public UserVo findById(long id) {
         UserVo vo = null;
 
-        try (
-                Connection conn = getConnection();
-                PreparedStatement pstmt = conn.prepareStatement("select name,email,password,gender from user where id = ?;");
-        ) {
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement("select name,email,password,gender from user where id = ?;");) {
             pstmt.setLong(1, id);
 
             ResultSet rs = pstmt.executeQuery();
@@ -76,13 +67,8 @@ public class UserDao extends MyConnection {
         return vo;
     }
 
-    public int updateById(UserVo vo) {
-        int result = 0;
-
-        try (
-                Connection conn = getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(vo.getPassword().isEmpty() ? "update user set name = ?, gender = ? where id=?;" : "update user set name = ?, gender = ?,password = ? where id=?;");
-        ) {
+    public boolean updateById(UserVo vo) {
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(vo.getPassword().isEmpty() ? "update user set name = ?, gender = ? where id=?;" : "update user set name = ?, gender = ?,password = ? where id=?;");) {
             int i = 1;
             pstmt.setString(i++, vo.getName());
             pstmt.setString(i++, vo.getGender());
@@ -91,10 +77,10 @@ public class UserDao extends MyConnection {
             }
             pstmt.setLong(i, vo.getId());
 
-            result = pstmt.executeUpdate();
+            return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
             System.out.println("SQLException: " + e.getMessage());
         }
-        return result;
+        return false;
     }
 }

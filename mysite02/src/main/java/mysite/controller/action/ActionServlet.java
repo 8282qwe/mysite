@@ -15,7 +15,6 @@ public abstract class ActionServlet extends HttpServlet {
     // operation
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
         Optional<String> optionalActionName = Optional.ofNullable(req.getParameter("a"));
 
         Action action = getAction(optionalActionName.orElse(""));

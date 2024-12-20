@@ -27,16 +27,15 @@ public class UpdateAction implements ActionServlet.Action {
             return;
         }
 
-        authUser.setName(req.getParameter("name"));
-        authUser.setPassword(req.getParameter("password"));
-        authUser.setEmail(req.getParameter("email"));
-        authUser.setGender(req.getParameter("gender"));
+        UserVo vo = new UserVo();
+        vo.setId(authUser.getId());
+        vo.setName(req.getParameter("name"));
+        vo.setPassword(req.getParameter("password"));
+        vo.setGender(req.getParameter("gender"));
 
-        if (new UserDao().updateById(authUser) == 1) {
-            UserVo userVo = new UserVo();
-            userVo.setId(authUser.getId());
-            userVo.setName(authUser.getName());
-            session.setAttribute("authUser", userVo);
+
+        if (new UserDao().updateById(vo)) {
+            authUser.setName(vo.getName());
         }
 
         resp.sendRedirect(req.getContextPath()+"/user?a=updateform");
