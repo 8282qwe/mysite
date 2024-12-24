@@ -18,9 +18,9 @@ public class ListAction implements ActionServlet.Action {
         String keyword = Optional.ofNullable(req.getParameter("kwd")).orElse("");
         int currentPage = Integer.parseInt(Optional.ofNullable(req.getParameter("page")).orElse("1"));
         int boardCount = new BoardDao().countBoard(keyword);
-        int totalPage = (int) Math.ceil ((double) boardCount / PER_PAGE);
-        int prevPage = ((currentPage - 1) / 5) * 5 + 1;
-        int endPage = Math.min((prevPage + 5 - 1), totalPage);
+        int totalPage = (int) Math.ceil((double) boardCount / PER_PAGE);
+        int prevPage = ((currentPage - 1) / 5) * 5;
+        int endPage = Math.min((prevPage + 5), totalPage);
 
         Map<String, Integer> pagingData = Map.of("currentPage", currentPage, "totalPage", totalPage, "prevPage", prevPage, "endPage", endPage,"totalCount",boardCount,"perPage",PER_PAGE);
         req.setAttribute("pagingData", pagingData);

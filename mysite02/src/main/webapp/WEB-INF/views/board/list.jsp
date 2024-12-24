@@ -47,16 +47,14 @@
                     </tr>
                 </c:forEach>
             </table>
-
             <!-- pager 추가 -->
             <div class="pager">
                 <ul>
                     <li>
-                        <c:if test="${pagingData.prevPage != 1}">
-                        <a href="${pageContext.request.contextPath}/board/list?page=${prevPage}${not empty param.kwd?'&kwd='.concat(param.kwd):""}">
-                            </c:if>
-                            ◀</li>
-                    <c:forEach begin="${pagingData.prevPage}" end="${pagingData.prevPage+4}" var="index">
+                        <c:if test="${pagingData.prevPage >= 1}">
+                        <a href="${pageContext.request.contextPath}/board?page=${pagingData.prevPage}${not empty param.kwd?'&kwd='.concat(param.kwd):""}">
+                            </c:if>◀</a></li>
+                    <c:forEach begin="${pagingData.prevPage+1}" end="${pagingData.prevPage+pagingData.perPage}" var="index">
                         <c:choose>
                             <c:when test="${index == pagingData.currentPage}">
                                 <li class="selected">${index}</li>
@@ -70,8 +68,8 @@
                         </c:choose>
                     </c:forEach>
                     <li>
-                        <c:if test="${pagingData.endPage != pagingData.totalPage}">
-                        <a href="${pageContext.request.contextPath}/board/list?page=${endPage}${not empty param.kwd?'&kwd='.concat(param.kwd):""}">
+                        <c:if test="${pagingData.endPage+1 <= pagingData.totalPage}">
+                        <a href="${pageContext.request.contextPath}/board?page=${pagingData.endPage+1}${not empty param.kwd?'&kwd='.concat(param.kwd):""}">
                             </c:if>▶</a></li>
                 </ul>
             </div>
