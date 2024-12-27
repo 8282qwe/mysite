@@ -22,7 +22,14 @@ public class ListAction implements ActionServlet.Action {
         int prevPage = ((currentPage - 1) / 5) * 5;
         int endPage = Math.min((prevPage + 5), totalPage);
 
-        Map<String, Integer> pagingData = Map.of("currentPage", currentPage, "totalPage", totalPage, "prevPage", prevPage, "endPage", endPage,"totalCount",boardCount,"perPage",PER_PAGE);
+        Map<String, Integer> pagingData = Map.of(
+                "currentPage", currentPage,
+                "totalPage", totalPage,
+                "prevPage", prevPage,
+                "endPage", endPage,
+                "totalCount",boardCount,
+                "perPage",PER_PAGE);
+
         req.setAttribute("pagingData", pagingData);
         req.setAttribute("boardList", new BoardDao().findAllBoard(currentPage, PER_PAGE ,keyword));
         req.setAttribute("kwd", keyword);
