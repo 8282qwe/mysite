@@ -134,3 +134,5 @@ fabric.properties
 
 # 프로젝트 제외 경로
 /mysite02/target/
+/mysite03/target
+/mysite03/target/
