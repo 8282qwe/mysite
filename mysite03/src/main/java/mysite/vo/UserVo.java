@@ -7,19 +7,10 @@ public class UserVo {
     private String password;
     private String gender;
     private String join_date;
+    private String role;
 
     public Long getId() {
         return id;
-    }
-
-    public UserVo() {
-    }
-
-    public UserVo(String name, String email, String password, String gender) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.gender = gender;
     }
 
     public void setId(Long id) {
@@ -64,6 +55,14 @@ public class UserVo {
 
     public void setJoin_date(String join_date) {
         this.join_date = join_date;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override

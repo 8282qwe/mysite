@@ -14,7 +14,7 @@ public class UserRepository extends MyConnection {
     public int insert(UserVo vo) {
         int result = 0;
 
-        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement("insert into user values (null,?,?,?,?,now());");) {
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement("insert into user values (null,?,?,?,?,now(),'USER');");) {
             pstmt.setString(1, vo.getName());
             pstmt.setString(2, vo.getEmail());
             pstmt.setString(3, vo.getPassword());
@@ -30,7 +30,7 @@ public class UserRepository extends MyConnection {
     public UserVo findByEmailAndPassword(String email, String password) {
         UserVo vo = null;
 
-        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement("select id,name from user where email=? and password=?;");) {
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement("select id,name,role from user where email=? and password=?;");) {
             pstmt.setString(1, email);
             pstmt.setString(2, password);
 
@@ -39,6 +39,7 @@ public class UserRepository extends MyConnection {
                 vo = new UserVo();
                 vo.setId(rs.getLong("id"));
                 vo.setName(rs.getString("name"));
+                vo.setRole(rs.getString("role"));
             }
             rs.close();
         } catch (SQLException e) {

@@ -43,7 +43,7 @@
         <url-pattern/>
     </servlet-mapping>
 
-     common errors file
+<!--     common errors file-->
     <error-page>
         <error-code>404</error-code>
         <location>/WEB-INF/views/errors/404.jsp</location>

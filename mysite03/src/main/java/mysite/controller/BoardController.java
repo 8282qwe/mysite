@@ -1,7 +1,8 @@
 package mysite.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import mysite.security.Auth;
+import mysite.security.AuthUser;
 import mysite.service.BoardService;
 import mysite.vo.BoardVo;
 import mysite.vo.UserVo;
@@ -44,11 +45,9 @@ public class BoardController {
         return "board/view";
     }
 
+    @Auth
     @RequestMapping(value = "/write", method = RequestMethod.GET)
-    public String viewWrite(HttpSession session, @RequestParam(value = "id", required = false) Long id, Model model) {
-        // Access Control
-        UserVo authUser = (UserVo) session.getAttribute("authUser");
-        if (authUser == null) return "redirect:/";
+    public String viewWrite(@RequestParam(value = "id", required = false) Long id, Model model) {
 
         if (id != null) {
             model.addAttribute("board", boardService.getContents(id));
@@ -56,11 +55,9 @@ public class BoardController {
         return "board/write";
     }
 
+    @Auth
     @RequestMapping(value = "/write", method = RequestMethod.POST)
-    public String write(HttpSession session, BoardVo vo) {
-        // Access Control
-        UserVo authUser = (UserVo) session.getAttribute("authUser");
-        if (authUser == null) return "redirect:/";
+    public String write(@AuthUser UserVo authUser, BoardVo vo) {
 
         vo.setUser_id(authUser.getId());
 
@@ -68,22 +65,23 @@ public class BoardController {
         return "redirect:/board";
     }
 
+    @Auth
     @RequestMapping(value = "/modify", method = RequestMethod.GET)
-    public String viewModify(HttpSession session, @RequestParam("id") Long id, @RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage, Model model) {
-        // Access Control
-        UserVo authUser = (UserVo) session.getAttribute("authUser");
-        if (authUser == null) return "redirect:/";
+    public String viewModify(@AuthUser UserVo authUser, @RequestParam("id") Long id, @RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage, Model model) {
+        BoardVo board = boardService.getContents(id);
 
-        model.addAttribute("board", boardService.getContents(id));
+        if (!authUser.getId().equals(board.getUser_id())) {
+            return "redirect:/board?page=" + currentPage;
+        }
+
+        model.addAttribute("board", board);
         model.addAttribute("currentPage", currentPage);
         return "board/modify";
     }
 
+    @Auth
     @RequestMapping(value = "/modify", method = RequestMethod.POST)
-    public String modify(HttpSession session, BoardVo vo, @RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage, Model model) {
-        // Access Control
-        UserVo authUser = (UserVo) session.getAttribute("authUser");
-        if (authUser == null) return "redirect:/";
+    public String modify(@AuthUser UserVo authUser, BoardVo vo, @RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage, Model model) {
 
         vo.setUser_id(authUser.getId());
 
@@ -92,11 +90,9 @@ public class BoardController {
         return "redirect:/board/view?id=" + vo.getId() + "&currentPage=" + currentPage;
     }
 
+    @Auth
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public String delete(HttpSession session, BoardVo vo, @PathVariable("id") Long id, @RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage, Model model) {
-        // Access Control
-        UserVo authUser = (UserVo) session.getAttribute("authUser");
-        if (authUser == null) return "redirect:/";
+    public String delete(@AuthUser UserVo authUser, @PathVariable("id") Long id, @RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage, Model model) {
 
         boardService.deleteContents(id, authUser.getId());
         model.addAttribute("currentPage", currentPage);
