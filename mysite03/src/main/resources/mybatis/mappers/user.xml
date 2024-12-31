@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="user">
+    <insert id="insert" parameterType="uservo" >
+<![CDATA[
+        insert into user
+        values (null, #{name}, #{email}, #{password}, #{gender}, now(), 'USER')
+        ]]>
+        <!-- Insert 작업 후 PrimaryKey(=id)를 가져와서 위의 parameterType(=uservo)에 담기 -->
+        <selectKey keyProperty="id" resultType="long" order="AFTER" />
+        <![CDATA[
+        select last_insert_id() from dual;
+        ]]>
+    </insert>
+
+    <select id="findByEmailAndPassword" parameterType="map" resultType="uservo">
+        <![CDATA[
+        select id, name, role
+        from user
+        where email = #{email}
+          and password = #{password}
+        ]]>
+    </select>
+
+    <select id="findById" parameterType="long" resultType="uservo">
+        <![CDATA[
+        select name, email, password, gender
+        from user
+        where id = #{id}
+        ]]>
+    </select>
+
+    <update id="updateById" parameterType="uservo">
+        update user
+        set name     = #{name},
+            gender   = #{gender}
+            <if test='password != ""'>
+                , password = #{password}
+            </if>
+        where id = #{id};
+    </update>
+</mapper>
