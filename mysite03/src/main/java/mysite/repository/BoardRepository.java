@@ -46,15 +46,15 @@ public class BoardRepository extends MyConnection {
             while (rs.next()) {
                 BoardVo board = new BoardVo();
                 board.setId(rs.getLong("id"));
-                board.setTitle(rs.getString("title"));
-                board.setContents(rs.getString("contents"));
-                board.setHit(rs.getInt("hit"));
+                board.setTitle(rs.getString("b.title"));
+                board.setContents(rs.getString("b.contents"));
+                board.setHit(rs.getInt("b.hit"));
                 board.setReg_date(rs.getString("reg_date_format"));
-                board.setG_no(rs.getInt("g_no"));
-                board.setO_no(rs.getInt("o_no"));
-                board.setDepth(rs.getInt("depth"));
-                board.setUser_id(rs.getLong("user_id"));
-                board.setUser_name(rs.getString("name"));
+                board.setG_no(rs.getInt("b.g_no"));
+                board.setO_no(rs.getInt("b.o_no"));
+                board.setDepth(rs.getInt("b.depth"));
+                board.setUser_id(rs.getLong("b.user_id"));
+                board.setUser_name(rs.getString("u.name"));
                 result.add(board);
             }
             return result;
@@ -85,7 +85,7 @@ public class BoardRepository extends MyConnection {
         BoardVo board = null;
         try (
                 Connection conn = getConnection();
-                PreparedStatement pstmt = conn.prepareStatement("select b.id as id, title,contents,hit, date_format(reg_date,'%Y-%m-%d %h:%i:%s') as reg_date_format, g_no,o_no,depth,user_id from board b join user u where b.user_id = u.id and b.id=?;");
+                PreparedStatement pstmt = conn.prepareStatement("select b.id as id, title,contents,hit, date_format(reg_date,'%Y-%m-%d %h:%i:%s') as reg_date_format, g_no,o_no,depth,user_id,name from board b join user u where b.user_id = u.id and b.id=?;");
         ) {
             pstmt.setLong(1, id);
             ResultSet rs = pstmt.executeQuery();
@@ -93,15 +93,15 @@ public class BoardRepository extends MyConnection {
             if (rs.next()) {
                 board = new BoardVo();
                 board.setId(rs.getLong("id"));
-                board.setTitle(rs.getString("title"));
-                board.setContents(rs.getString("contents"));
-                board.setHit(rs.getInt("hit"));
+                board.setTitle(rs.getString("b.title"));
+                board.setContents(rs.getString("b.contents"));
+                board.setHit(rs.getInt("b.hit"));
                 board.setReg_date(rs.getString("reg_date_format"));
-                board.setG_no(rs.getInt("g_no"));
-                board.setO_no(rs.getInt("o_no"));
-                board.setDepth(rs.getInt("depth"));
-                board.setUser_id(rs.getLong("user_id"));
-                board.setUser_name(rs.getString("name"));
+                board.setG_no(rs.getInt("b.g_no"));
+                board.setO_no(rs.getInt("b.o_no"));
+                board.setDepth(rs.getInt("b.depth"));
+                board.setUser_id(rs.getLong("b.user_id"));
+                board.setUser_name(rs.getString("u.name"));
             }
 
         } catch (SQLException e) {
