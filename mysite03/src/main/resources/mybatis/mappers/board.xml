@@ -12,21 +12,21 @@
 
     <select id="findAllBoard" resultType="boardvo" parameterType="map">
         select b.id as id,
-               b.title as title,
-               b.contents as contents,
-               b.hit as hit,
-               date_format(b.reg_date, '%Y-%m-%d %h:%i:%s') as reg_date,
-               b.g_no as g_no,
-               b.o_no as o_no,
-               b.depth as depth,
-               b.user_id as user_id,
-               u.name as user_name
+        b.title as title,
+        b.contents as contents,
+        b.hit as hit,
+        date_format(b.reg_date, '%Y-%m-%d %h:%i:%s') as reg_date,
+        b.g_no as g_no,
+        b.o_no as o_no,
+        b.depth as depth,
+        b.user_id as user_id,
+        u.name as user_name
         from board b
-                 join user u
+        join user u
         where u.id = b.user_id
-          <if test='keyword != ""'>
-              and b.title like #{keyword} or b.contents like #{keyword}
-          </if>
+        <if test='keyword != ""'>
+            and b.title like #{keyword} or b.contents like #{keyword}
+        </if>
         order by g_no desc, o_no asc
         limit #{currentPage},#{pageSize}
     </select>
@@ -46,16 +46,16 @@
 
     <select id="findById" parameterType="long" resultType="boardvo">
         <![CDATA[
-        select b.id as id,
-               b.title as title,
-               b.contents as contents,
-               b.hit as hit,
+        select b.id                                       as id,
+               b.title                                    as title,
+               b.contents                                 as contents,
+               b.hit                                      as hit,
                date_format(reg_date, '%Y-%m-%d %h:%i:%s') as reg_date,
-               b.g_no as g_no,
-               b.o_no as o_no,
-               b.depth as depth,
-               b.user_id as user_id,
-               u.name as user_name
+               b.g_no                                     as g_no,
+               b.o_no                                     as o_no,
+               b.depth                                    as depth,
+               b.user_id                                  as user_id,
+               u.name                                     as user_name
         from board b
                  join user u
         where b.user_id = u.id
@@ -69,14 +69,21 @@
         FROM board
         WHERE g_no = #{board.g_no}
           AND o_no >= #{board.o_no}
-          AND (o_no < (SELECT MIN(o_no) FROM board WHERE g_no = #{board.g_no} AND o_no > #{board.o_no} AND depth <= #{board.depth}) OR
-               (SELECT MIN(o_no) FROM board WHERE g_no = #{board.g_no} AND o_no > #{board.o_no} AND depth <= #{board.depth}) IS NULL)
+          AND (o_no < (SELECT MIN(o_no)
+                       FROM board
+                       WHERE g_no = #{board.g_no} AND o_no > #{board.o_no} AND depth <= #{board.depth}) OR
+               (SELECT MIN(o_no)
+                FROM board
+                WHERE g_no = #{board.g_no} AND o_no > #{board.o_no} AND depth <= #{board.depth}) IS NULL)
           and user_id = #{id}
         ]]>
     </delete>
 
     <update id="updateBoard" parameterType="boardvo">
-        update board set title = #{title},contents=#{contents} where id = #{id}
+        update board
+        set title   = #{title},
+            contents=#{contents}
+        where id = #{id}
     </update>
 
     <update id="updateReply" parameterType="map">
@@ -87,6 +94,8 @@
     </update>
 
     <update id="updateViewById" parameterType="long">
-        update board set hit = hit+1 where id = #{id}
+        update board
+        set hit = hit + 1
+        where id = #{id}
     </update>
 </mapper>
