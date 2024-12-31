@@ -36,7 +36,7 @@ public class BoardRepository extends MyConnection {
 
         try (
                 Connection conn = getConnection();
-                PreparedStatement pstmt = conn.prepareStatement("select id, title,contents,hit, date_format(reg_date,'%Y-%m-%d %h:%i:%s') as reg_date_format, g_no,o_no,depth,user_id from board where title like ? order by g_no desc, o_no asc limit ?,?;");
+                PreparedStatement pstmt = conn.prepareStatement("select b.id as id, title,contents,hit, date_format(b.reg_date,'%Y-%m-%d %h:%i:%s') as reg_date_format, g_no,o_no,depth,user_id,name from board b join user u where u.id = b.user_id and b.title like ? order by g_no desc, o_no asc limit ?,?;");
         ) {
             pstmt.setString(1, keyword.isBlank() ? "%" : "%"+keyword+"%");
             pstmt.setInt(2, (currentPage - 1) * pageSize);
@@ -54,7 +54,7 @@ public class BoardRepository extends MyConnection {
                 board.setO_no(rs.getInt("o_no"));
                 board.setDepth(rs.getInt("depth"));
                 board.setUser_id(rs.getLong("user_id"));
-                board.setUser_name(new UserRepository().findById(rs.getLong("user_id")).getName());
+                board.setUser_name(rs.getString("name"));
                 result.add(board);
             }
             return result;
@@ -85,7 +85,7 @@ public class BoardRepository extends MyConnection {
         BoardVo board = null;
         try (
                 Connection conn = getConnection();
-                PreparedStatement pstmt = conn.prepareStatement("select id, title,contents,hit, date_format(reg_date,'%Y-%m-%d %h:%i:%s') as reg_date_format, g_no,o_no,depth,user_id from board where id=?;");
+                PreparedStatement pstmt = conn.prepareStatement("select b.id as id, title,contents,hit, date_format(reg_date,'%Y-%m-%d %h:%i:%s') as reg_date_format, g_no,o_no,depth,user_id from board b join user u where b.user_id = u.id and b.id=?;");
         ) {
             pstmt.setLong(1, id);
             ResultSet rs = pstmt.executeQuery();
@@ -101,7 +101,7 @@ public class BoardRepository extends MyConnection {
                 board.setO_no(rs.getInt("o_no"));
                 board.setDepth(rs.getInt("depth"));
                 board.setUser_id(rs.getLong("user_id"));
-                board.setUser_name(new UserRepository().findById(rs.getLong("user_id")).getName());
+                board.setUser_name(rs.getString("name"));
             }
 
         } catch (SQLException e) {
