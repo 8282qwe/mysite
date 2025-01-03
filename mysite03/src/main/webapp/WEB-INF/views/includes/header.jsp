@@ -1,7 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <div id="header">
-    <h1>MySite</h1>
+    <h1><spring:eval expression="@siteService.site.title"/></h1>
     <ul>
         <c:choose>
             <c:when test="${sessionScope.get('authUser') != null}">

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class BoardRepository extends MyConnection {
+public class BoardRepository {
     private final SqlSession sqlSession;
 
     public BoardRepository(SqlSession sqlSession) {

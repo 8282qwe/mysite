@@ -14,6 +14,9 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>21</maven.compiler.target>
+
+    <jcloverslf4j.version>2.0.16</jcloverslf4j.version>
+    <logback.version>1.5.15</logback.version>
   </properties>
 
   <dependencies>
@@ -47,6 +50,13 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
       <version>${org.springframework-version}</version>
+      <!-- JCL 제외 -->
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-jcl</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <dependency>
@@ -93,6 +103,19 @@
       <groupId>org.mariadb.jdbc</groupId>
       <artifactId>mariadb-java-client</artifactId>
       <version>3.4.0</version>
+    </dependency>
+
+    <!-- Logback -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+      <version>${jcloverslf4j.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>${logback.version}</version>
     </dependency>
   </dependencies>
   <build>
