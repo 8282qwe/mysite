@@ -2,16 +2,17 @@ package mysite.service;
 
 import mysite.repository.SiteRepository;
 import mysite.vo.SiteVo;
-import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SiteService implements InitializingBean {
+public class SiteService {
     private final SiteRepository siteRepository;
-    private SiteVo siteVo;
+    private final ApplicationContext applicationContext;
 
-    public SiteService(SiteRepository siteRepository) {
+    public SiteService(SiteRepository siteRepository, ApplicationContext applicationContext) {
         this.siteRepository = siteRepository;
+        this.applicationContext = applicationContext;
     }
 
     public SiteVo getSite() {
@@ -19,19 +20,11 @@ public class SiteService implements InitializingBean {
     }
 
     public void updateSite(SiteVo siteVo,String filename) {
-        siteVo.setId(siteVo.getId());
+        SiteVo site = applicationContext.getBean(SiteVo.class);
+        siteVo.setId(site.getId());
         siteVo.setProfile(filename);
         if (siteRepository.updateSite(siteVo)>=1){
-            this.siteVo=siteVo;
+            applicationContext.getBean(SiteVo.class).setTitle(siteVo.getTitle());
         };
-    }
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        this.siteVo = siteRepository.findOneSite();
-    }
-
-    public SiteVo getSiteVo() {
-        return siteVo;
     }
 }
