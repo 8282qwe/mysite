@@ -39,6 +39,13 @@
             <mvc:exclude-mapping path="/user/logout"/>
             <bean class="mysite.security.AuthInterceptor"/>
         </mvc:interceptor>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/assets/**"/>
+            <mvc:exclude-mapping path="/admin/**"/>
+            <bean class="mysite.interceptor.SiteInterceptor"/>
+        </mvc:interceptor>
     </mvc:interceptors>
 
     <!-- View Resolver -->
@@ -49,6 +56,24 @@
         <!-- View Resolver 순서 -->
         <!--        <property name="order" value="1"/>-->
     </bean>
+
+    <!-- Locale Resolver -->
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+        <constructor-arg name="cookieName" value="lang"/>
+        <property name="cookieHttpOnly" value="false" />
+    </bean>
+
+    <!-- Message Source -->
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>messages/message</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- ApplicationContextEventListener -->
+    <bean class="mysite.event.ApplicationContextEventListener" />
 
     <context:annotation-config/>
     <context:component-scan base-package="mysite.*"/>

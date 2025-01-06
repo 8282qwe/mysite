@@ -8,8 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class SiteService implements InitializingBean {
     private final SiteRepository siteRepository;
-    private Long id;
-    private String title;
+    private SiteVo siteVo;
 
     public SiteService(SiteRepository siteRepository) {
         this.siteRepository = siteRepository;
@@ -20,17 +19,19 @@ public class SiteService implements InitializingBean {
     }
 
     public void updateSite(SiteVo siteVo,String filename) {
-        siteVo.setId(id);
+        siteVo.setId(siteVo.getId());
         siteVo.setProfile(filename);
         if (siteRepository.updateSite(siteVo)>=1){
-            this.title = siteVo.getTitle();
+            this.siteVo=siteVo;
         };
     }
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        SiteVo siteVo = siteRepository.findOneSite();
-        this.title = siteVo.getTitle();
-        this.id = siteVo.getId();
+        this.siteVo = siteRepository.findOneSite();
+    }
+
+    public SiteVo getSiteVo() {
+        return siteVo;
     }
 }
