@@ -11,7 +11,7 @@
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <!-- AOP 프로그래밍 -->
-    <aop:aspectj-autoproxy/>
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
 
     <!-- 서블릿 컨테이너의 디폴트 서블릿 위임 핸들러 -->
     <mvc:default-servlet-handler/>
@@ -45,7 +45,7 @@
 
     <context:annotation-config/>
 
-    <context:component-scan base-package="mysite.service,mysite.repository,mysite.aop">
+    <context:component-scan base-package="mysite.*">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Component"/>
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>

@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page import="java.util.Optional" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <!doctype html>
@@ -15,18 +17,19 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="user">
-				<form id="login-form" name="loginform" method="post" action="${pageContext.request.contextPath}/user/auth">
-					<label class="block-label" for="email">이메일</label>
+				<form:form id="login-form" name="loginform" method="post" action="${pageContext.request.contextPath}/user/auth">
+					<label class="block-label" for="email"><spring:message code="user.signin.label.email"/></label>
 					<input id="email" name="email" type="text" value="${Optional.ofNullable(email).orElse("")}">
-					<label class="block-label" >패스워드</label>
+					<label class="block-label" ><spring:message code="user.signin.label.password"/></label>
 					<input name="password" type="password" value="">
 					<c:if test="${'fail'.equals(result)}">
 						<p>
-							로그인이 실패 했습니다.
+							<spring:message code="user.signin.fail"/>
 						</p>
 					</c:if>
-					<input type="submit" value="로그인">
-				</form>
+					<spring:message code="user.signin.button.text" var="signin"/>
+					<input type="submit" value="${signin}">
+				</form:form>
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/includes/navigation.jsp"/>

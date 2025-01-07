@@ -3,7 +3,6 @@ package mysite.repository;
 import mysite.vo.UserVo;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.StopWatch;
 
 import java.util.Map;
 
@@ -21,11 +20,6 @@ public class UserRepository {
     }
 
     public UserVo findByEmailAndPassword(String email, String password) {
-        StopWatch sw = new StopWatch();
-        sw.start();
-        sw.stop();
-        System.out.println(sw.prettyPrint());
-        System.out.println("[Execution Time][UserRepository.findByEmailAndPassword]: ]" + sw.getTotalTimeMillis() + "mills");
         return sqlSession.selectOne("user.findByEmailAndPassword", Map.of("email", email, "password", password));
     }
 

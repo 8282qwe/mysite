@@ -2,8 +2,8 @@ package mysite.service;
 
 import mysite.repository.SiteRepository;
 import mysite.vo.SiteVo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,11 +25,7 @@ public class SiteService {
         siteVo.setId(site.getId());
         siteVo.setProfile(filename);
         if (siteRepository.updateSite(siteVo)>=1){
-            SiteVo site1 = siteRepository.findOneSite();
-            site.setTitle(site1.getTitle());
-            site.setDescription(site1.getDescription());
-            site.setProfile(site1.getProfile());
-            site.setWelcome(site1.getWelcome());
+            BeanUtils.copyProperties(siteRepository.findOneSite(),site);
         };
     }
 }

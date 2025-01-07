@@ -1,11 +1,14 @@
 package mysite.controller;
 
+import jakarta.validation.Valid;
 import mysite.security.Auth;
 import mysite.security.AuthUser;
 import mysite.service.UserService;
 import mysite.vo.UserVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -19,12 +22,17 @@ public class UserController {
     }
 
     @RequestMapping(value = "/join", method = RequestMethod.GET)
-    public String join() {
+    public String join(@ModelAttribute UserVo userVo) {
         return "user/join";
     }
 
     @RequestMapping(value = "/join", method = RequestMethod.POST)
-    public String join(UserVo userVo) {
+    public String joinUser(@ModelAttribute @Valid UserVo userVo, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAllAttributes(result.getModel());
+            return "user/join";
+        }
+
         userService.joinUser(userVo);
         return "redirect:/user/joinsuccess";
     }
@@ -35,7 +43,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login() {
+    public String login(@ModelAttribute UserVo userVo) {
         return "user/login";
     }
 
