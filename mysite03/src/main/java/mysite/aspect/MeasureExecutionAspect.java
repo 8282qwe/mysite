@@ -12,7 +12,6 @@ public class MeasureExecutionAspect {
 
     @Around("execution(* *.repository.*.*(..)) || execution(* *.controller.*.*(..)) || execution(* *.service.*.*(..))")
     public Object adviceAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        System.out.println("Time Check");
         StopWatch sw = new StopWatch();
         sw.start();
 

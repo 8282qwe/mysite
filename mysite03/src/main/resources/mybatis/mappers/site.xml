@@ -4,7 +4,8 @@
 <mapper namespace="site">
     <select id="findOneSite" resultType="sitevo">
         select *
-        from site;
+        from site
+        limit 1;
     </select>
 
     <update id="updateSite" parameterType="sitevo">
