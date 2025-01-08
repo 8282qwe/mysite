@@ -4,6 +4,7 @@
   <groupId>com.poscodx</groupId>
   <artifactId>mysite03</artifactId>
   <packaging>war</packaging>
+  <version>1.0-SNAPSHOT</version>
   <name>mysite03</name>
   <url>https://maven.apache.org</url>
 
