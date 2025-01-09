@@ -1,5 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.poscodx</groupId>
@@ -8,30 +9,79 @@
   </parent>
   <artifactId>mysite03</artifactId>
   <packaging>war</packaging>
-  <version>1.0-SNAPSHOT</version>
-  <name>mysite03</name>
-  <url>https://maven.apache.org</url>
 
   <properties>
-    <org.springframework-version>6.2.1</org.springframework-version>
-    <java.version>21</java.version>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
     <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>21</maven.compiler.target>
-
-    <jcloverslf4j.version>2.0.16</jcloverslf4j.version>
-    <logback.version>1.5.15</logback.version>
+    <org.springframework-version>6.2.1</org.springframework-version>
+    <jcloverslf4j.version>1.7.36</jcloverslf4j.version>
+    <logback.version>1.2.11</logback.version>
   </properties>
 
   <dependencies>
+    <!-- spring mvc-->
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+      <version>${org.springframework-version}</version>
+      <!-- JCL excluded -->
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-jcl</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
-    <!-- jstl -->
+    <!-- spring aspects -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-aspects</artifactId>
+      <version>${org.springframework-version}</version>
+    </dependency>
+
+    <!-- spring jdbc -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
+      <version>${org.springframework-version}</version>
+    </dependency>
+
+    <!-- MyBatis -->
+    <dependency>
+      <groupId>org.mybatis</groupId>
+      <artifactId>mybatis</artifactId>
+      <version>3.5.16</version>
+    </dependency>
+    <dependency>
+      <groupId>org.mybatis</groupId>
+      <artifactId>mybatis-spring</artifactId>
+      <version>3.0.4</version>
+    </dependency>
+
+    <!-- common dbcp -->
+    <dependency>
+      <groupId>commons-dbcp</groupId>
+      <artifactId>commons-dbcp</artifactId>
+      <version>1.4</version>
+    </dependency>
+
+    <!-- mariadb jdbc -->
+    <dependency>
+      <groupId>org.mariadb.jdbc</groupId>
+      <artifactId>mariadb-java-client</artifactId>
+      <version>3.4.0</version>
+    </dependency>
+
+    <!-- hibernate validator -->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator</artifactId>
+      <version>8.0.0.Final</version>
+    </dependency>
+
+    <!-- jstl/el -->
     <dependency>
       <groupId>jakarta.el</groupId>
       <artifactId>jakarta.el-api</artifactId>
@@ -42,71 +92,10 @@
       <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
       <version>3.0.0</version>
     </dependency>
-
     <dependency>
       <groupId>org.glassfish.web</groupId>
       <artifactId>jakarta.servlet.jsp.jstl</artifactId>
       <version>3.0.1</version>
-    </dependency>
-
-    <!-- Spring MVC -->
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context</artifactId>
-      <version>${org.springframework-version}</version>
-      <!-- JCL 제외 -->
-      <exclusions>
-        <exclusion>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-jcl</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-web</artifactId>
-      <version>${org.springframework-version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-webmvc</artifactId>
-      <version>${org.springframework-version}</version>
-    </dependency>
-
-    <!-- Spring JDBC -->
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-jdbc</artifactId>
-      <version>${org.springframework-version}</version>
-    </dependency>
-
-    <!-- common DBCP -->
-    <dependency>
-      <groupId>commons-dbcp</groupId>
-      <artifactId>commons-dbcp</artifactId>
-      <version>1.4</version>
-    </dependency>
-
-    <!-- MyBatis -->
-    <dependency>
-      <groupId>org.mybatis</groupId>
-      <artifactId>mybatis</artifactId>
-      <version>3.5.16</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.mybatis</groupId>
-      <artifactId>mybatis-spring</artifactId>
-      <version>3.0.4</version>
-    </dependency>
-
-    <!-- mariaDB JDBC -->
-    <dependency>
-      <groupId>org.mariadb.jdbc</groupId>
-      <artifactId>mariadb-java-client</artifactId>
-      <version>3.4.0</version>
     </dependency>
 
     <!-- Logback -->
@@ -122,23 +111,24 @@
       <version>${logback.version}</version>
     </dependency>
 
-    <!-- Spring AOP -->
+    <!-- servlet api -->
     <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-aspects</artifactId>
-      <version>${org.springframework-version}</version>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <version>6.0.0</version>
+      <scope>provided</scope>
     </dependency>
 
-    <!-- Validator 라이브러리 -->
+    <!-- jsp api -->
     <dependency>
-      <groupId>org.hibernate.validator</groupId>
-      <artifactId>hibernate-validator</artifactId>
-      <version>8.0.2.Final</version>
+      <groupId>jakarta.servlet.jsp</groupId>
+      <artifactId>jakarta.servlet.jsp-api</artifactId>
+      <version>4.0.0</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 
   <build>
     <finalName>mysite03</finalName>
   </build>
-
 </project>
