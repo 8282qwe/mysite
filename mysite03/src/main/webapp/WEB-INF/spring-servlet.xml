@@ -19,6 +19,27 @@
 
     <!-- Validator, ConversionService, MessageConverter를 자동으로 등록 -->
     <mvc:annotation-driven>
+        <!-- Message Converters -->
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/html; charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+            <!-- json Converters -->
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>application/json</value>
+                    </list>
+                </property>
+                <property name="defaultCharset">
+                    <value>UTF-8</value>
+                </property>
+            </bean>
+        </mvc:message-converters>
         <!-- Argument Resolvers -->
         <mvc:argument-resolvers>
             <bean class="mysite.security.AuthUserHandlerMethodArgumentResolver"/>
