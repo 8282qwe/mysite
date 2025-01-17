@@ -1,6 +1,5 @@
 package mysite.controller;
 
-import mysite.security.Auth;
 import mysite.service.FileUploadService;
 import mysite.service.SiteService;
 import mysite.vo.SiteVo;
@@ -12,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
 
-@Auth(role = "ADMIN")
 @Controller
 @RequestMapping("/admin")
 public class AdminController {

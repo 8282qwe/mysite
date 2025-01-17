@@ -50,8 +50,15 @@ public class SecurityConfig {
                 })
                 .authorizeHttpRequests((authorizeRequests) -> {
                     authorizeRequests
-                            .requestMatchers(new RegexRequestMatcher("^/user/update$", null)).authenticated()
+                            .requestMatchers(new RegexRequestMatcher("^/admin/?.*$", null)).hasAnyRole("ADMIN")
+                            .requestMatchers(new RegexRequestMatcher("^/user/update$", null)).hasAnyRole("USER", "ADMIN")
+                            .requestMatchers(new RegexRequestMatcher("^/board/?(write|modify|delete|reply)$", null)).hasAnyRole("USER", "ADMIN")
                             .anyRequest().permitAll();
+                })
+                .exceptionHandling((exception) -> {
+                    exception
+                            .accessDeniedHandler((request, response, accessDeniedException) -> response.sendRedirect(request.getContextPath()));
+//                            .accessDeniedPage("/WEB-INF/views/errors/403.jsp");
                 })
                 .build();
     }

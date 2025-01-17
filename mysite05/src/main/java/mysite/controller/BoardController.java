@@ -1,7 +1,6 @@
 package mysite.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
-import mysite.security.Auth;
 import mysite.security.UserDetailsImpl;
 import mysite.service.BoardService;
 import mysite.vo.BoardVo;
@@ -45,7 +44,6 @@ public class BoardController {
         return "board/view";
     }
 
-    @Auth
     @RequestMapping(value = "/write", method = RequestMethod.GET)
     public String viewWrite(@RequestParam(value = "id", required = false) Long id, Model model) {
 
@@ -55,7 +53,6 @@ public class BoardController {
         return "board/write";
     }
 
-    @Auth
     @RequestMapping(value = "/write", method = RequestMethod.POST)
     public String write(@AuthenticationPrincipal UserDetailsImpl authUser, BoardVo vo) {
 
@@ -65,7 +62,6 @@ public class BoardController {
         return "redirect:/board";
     }
 
-    @Auth
     @RequestMapping(value = "/modify", method = RequestMethod.GET)
     public String viewModify(@AuthenticationPrincipal UserDetailsImpl authUser, @RequestParam("id") Long id, @RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage, Model model) {
         BoardVo board = boardService.getContents(id);
@@ -79,7 +75,6 @@ public class BoardController {
         return "board/modify";
     }
 
-    @Auth
     @RequestMapping(value = "/modify", method = RequestMethod.POST)
     public String modify(@AuthenticationPrincipal UserDetailsImpl authUser, BoardVo vo, @RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage, Model model) {
 
@@ -90,7 +85,6 @@ public class BoardController {
         return "redirect:/board/view?id=" + vo.getId() + "&currentPage=" + currentPage;
     }
 
-    @Auth
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String delete(@AuthenticationPrincipal UserDetailsImpl authUser, @PathVariable("id") Long id, @RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage, Model model) {
 

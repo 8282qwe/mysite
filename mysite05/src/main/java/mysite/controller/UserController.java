@@ -2,7 +2,6 @@ package mysite.controller;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import mysite.security.Auth;
 import mysite.security.UserDetailsImpl;
 import mysite.service.UserService;
 import mysite.vo.UserVo;
@@ -51,7 +50,6 @@ public class UserController {
     }
 
 
-    @Auth
     @RequestMapping(value = "/update", method = RequestMethod.GET)
     public String update(@AuthenticationPrincipal UserDetailsImpl authUser, Model model) {
         // 4. @AuthenticationPrincipal 사용
@@ -62,7 +60,6 @@ public class UserController {
         return "user/update";
     }
 
-    @Auth
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String update(HttpSession session, UserVo userVo, Authentication authentication) {
         // 1. HttpSession을 사용하는 방법
