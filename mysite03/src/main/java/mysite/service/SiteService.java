@@ -3,17 +3,19 @@ package mysite.service;
 import mysite.repository.SiteRepository;
 import mysite.vo.SiteVo;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SiteService {
     private final SiteRepository siteRepository;
-    private final ApplicationContext applicationContext;
 
-    public SiteService(SiteRepository siteRepository, ApplicationContext applicationContext) {
+    @Autowired
+    private ApplicationContext applicationContext;
+
+    public SiteService(SiteRepository siteRepository) {
         this.siteRepository = siteRepository;
-        this.applicationContext = applicationContext;
     }
 
     public SiteVo getSite() {
