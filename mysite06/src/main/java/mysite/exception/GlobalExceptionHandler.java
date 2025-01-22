@@ -9,6 +9,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -46,12 +47,12 @@ public class GlobalExceptionHandler {
 //            request.getRequestDispatcher("/WEB-INF/views/errors/exception.jsp").forward(request, response);
 //
 //            return;
-            if (e instanceof NoHandlerFoundException) {
-                request.getRequestDispatcher("/WEB-INF/views/errors/404.jsp").forward(request, response);
+            if (e instanceof NoHandlerFoundException || e instanceof NoResourceFoundException) {
+                request.getRequestDispatcher("/errors/404").forward(request, response);
             }
             else {
                 request.setAttribute("errors", sw.toString());
-                request.getRequestDispatcher("/WEB-INF/views/errors/500.jsp").forward(request, response);
+                request.getRequestDispatcher("/errors/500").forward(request, response);
             }
         }
     }

@@ -63,4 +63,14 @@ server:
     encoding:
       charset: UTF-8
 
+  #WhiteLabel Error
+  error:
+    whitelabel:
+      enabled: true
+    path: /error
+
+#logging
+logging:
+  config: classpath:logback.xml
+
 

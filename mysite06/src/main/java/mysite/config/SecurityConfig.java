@@ -48,7 +48,7 @@ public class SecurityConfig {
                                 // PostMapping이 컨트롤러에 있어야함.
                                 request.setAttribute("result", "fail");
                                 request.setAttribute("email", request.getParameter("email"));
-                                request.getRequestDispatcher(request.getContextPath()+"/user/login").forward(request, response);
+                                request.getRequestDispatcher("/user/login").forward(request, response);
                             });
                 })
                 .logout(logout -> {
@@ -63,11 +63,11 @@ public class SecurityConfig {
                             .requestMatchers(new RegexRequestMatcher("^/board/?(write|modify|delete|reply)$", null)).hasAnyRole("USER", "ADMIN")
                             .anyRequest().permitAll();
                 })
-                .exceptionHandling((exception) -> {
-                    exception
-                            .accessDeniedHandler((request, response, accessDeniedException) -> response.sendRedirect(request.getContextPath()));
-//                            .accessDeniedPage("/WEB-INF/views/errors/403.jsp");
-                })
+//                .exceptionHandling((exception) -> {
+//                    exception
+//                            .accessDeniedHandler((request, response, accessDeniedException) -> response.sendRedirect(request.getContextPath()));
+////                            .accessDeniedPage("/WEB-INF/views/errors/403.jsp");
+//                })
                 .build();
     }
 
