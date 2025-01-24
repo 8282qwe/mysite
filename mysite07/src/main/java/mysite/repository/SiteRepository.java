@@ -1,16 +1,14 @@
 package mysite.repository;
 
+import lombok.AllArgsConstructor;
 import mysite.vo.SiteVo;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+@AllArgsConstructor
 @Repository
 public class SiteRepository {
     private final SqlSession sqlSession;
-
-    public SiteRepository(SqlSession sqlSession) {
-        this.sqlSession = sqlSession;
-    }
 
     public SiteVo findOneSite() {
         return sqlSession.selectOne("site.findOneSite");

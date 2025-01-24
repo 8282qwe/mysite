@@ -43,7 +43,7 @@ public class GlobalExceptionHandler {
             // 4. 사과 페이지 (종료)
 //            response.setContentType("text/html;charset=utf-8");
 //            request.setAttribute("errors", sw.toString());
-//            request.getRequestDispatcher("/WEB-INF/views/errors/exception.jsp").forward(request, response);
+//            request.getRequestDispatcher("/WEB-INF/views/errors/exception.html").forward(request, response);
 //
 //            return;
             if (e instanceof NoHandlerFoundException || e instanceof NoResourceFoundException) {

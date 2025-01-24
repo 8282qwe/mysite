@@ -2,6 +2,7 @@ package mysite.controller;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import mysite.security.UserDetailsImpl;
 import mysite.service.UserService;
 import mysite.vo.UserVo;
@@ -14,14 +15,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+@AllArgsConstructor
 @Controller
 @RequestMapping("/user")
 public class UserController {
     private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     @RequestMapping(value = "/join", method = RequestMethod.GET)
     public String join(@ModelAttribute UserVo userVo) {

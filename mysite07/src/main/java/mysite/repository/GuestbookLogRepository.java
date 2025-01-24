@@ -1,15 +1,13 @@
 package mysite.repository;
 
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+@AllArgsConstructor
 @Repository
 public class GuestbookLogRepository {
     private final SqlSession sqlSession;
-
-    public GuestbookLogRepository(SqlSession sqlSession) {
-        this.sqlSession = sqlSession;
-    }
 
     public int insert() {
         return sqlSession.update("guestbook_log.insert");

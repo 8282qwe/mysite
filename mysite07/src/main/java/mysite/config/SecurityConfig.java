@@ -66,7 +66,7 @@ public class SecurityConfig {
 //                .exceptionHandling((exception) -> {
 //                    exception
 //                            .accessDeniedHandler((request, response, accessDeniedException) -> response.sendRedirect(request.getContextPath()));
-////                            .accessDeniedPage("/WEB-INF/views/errors/403.jsp");
+////                            .accessDeniedPage("/WEB-INF/views/errors/403.html");
 //                })
                 .build();
     }

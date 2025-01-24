@@ -1,5 +1,6 @@
 package mysite.controller.api;
 
+import lombok.AllArgsConstructor;
 import mysite.dto.JsonResult;
 import mysite.service.UserService;
 import mysite.vo.UserVo;
@@ -10,14 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
+@AllArgsConstructor
 @RestController("userApiController")
 @RequestMapping("/api/user")
 public class UserController {
     private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     // "{exist : false or true}"
     @GetMapping("/checkemail")

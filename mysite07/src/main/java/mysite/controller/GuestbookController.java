@@ -1,5 +1,6 @@
 package mysite.controller;
 
+import lombok.AllArgsConstructor;
 import mysite.service.GuestBookService;
 import mysite.vo.GuestbookVo;
 import org.springframework.stereotype.Controller;
@@ -9,14 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+@AllArgsConstructor
 @Controller
 @RequestMapping("/guestbook")
 public class GuestbookController {
     private final GuestBookService guestBookService;
-
-    public GuestbookController(GuestBookService guestBookService) {
-        this.guestBookService = guestBookService;
-    }
 
     @RequestMapping({"","/"})
     public String guestbook(Model model) {

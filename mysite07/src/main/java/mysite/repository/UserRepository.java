@@ -1,20 +1,18 @@
 package mysite.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
 import mysite.vo.UserVo;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import java.util.Map;
 
+@AllArgsConstructor
 @Repository
 public class UserRepository {
 
     private final SqlSession sqlSession;
-
-    public UserRepository(SqlSession sqlSession) {
-        this.sqlSession = sqlSession;
-    }
 
     public int insert(UserVo vo) {
         return sqlSession.insert("user.insert", vo);

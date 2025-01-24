@@ -1,5 +1,8 @@
 package mysite.dto;
 
+import lombok.Getter;
+
+@Getter
 public class JsonResult {
     // "success" or "fail"
     private String result;
@@ -26,17 +29,5 @@ public class JsonResult {
     private JsonResult(String message) {
         this.result = "fail";
         this.message = message;
-    }
-
-    public String getResult() {
-        return result;
-    }
-
-    public Object getData() {
-        return data;
-    }
-
-    public String getMessage() {
-        return message;
     }
 }

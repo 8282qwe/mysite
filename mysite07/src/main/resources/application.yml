@@ -23,9 +23,9 @@ spring:
 
   #JSP
   mvc:
-    view:
-      suffix: .jsp
-      prefix: /WEB-INF/views/
+#    view:
+#      suffix: .jsp
+#      prefix: /WEB-INF/views/
     static-path-pattern: /assets/**
 
   #MultipartFile Setting
@@ -41,7 +41,18 @@ spring:
     resources:
       static-locations:
         - classpath:assets/
-        - file:../mysite-upload/
+        - file:/Users/jangwoo/Desktop/[62]2024.11.포스코DX09/mysite/mysite-upload/
+
+  #thymeleaf
+  thymeleaf:
+    cache: false
+    enable-spring-el-compiler: true
+    servlet:
+      content-type: text/html
+    check-template-location: true
+    prefix: classpath:/templates/views/
+    suffix: .html
+    
 
   # DB
   datasource:
@@ -71,6 +82,5 @@ server:
 
 #logging
 logging:
-  config: classpath:logback.xml
-
-
+  level:
+    web: debug

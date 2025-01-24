@@ -1,6 +1,7 @@
 package mysite.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
 import mysite.security.UserDetailsImpl;
 import mysite.service.BoardService;
 import mysite.vo.BoardVo;
@@ -11,14 +12,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+@AllArgsConstructor
 @Controller
 @RequestMapping("/board")
 public class BoardController {
     private final BoardService boardService;
-
-    public BoardController(BoardService boardService) {
-        this.boardService = boardService;
-    }
 
     @RequestMapping({"", "/"})
     public String board(Model model, @RequestParam(value = "page", defaultValue = "1") Integer page,

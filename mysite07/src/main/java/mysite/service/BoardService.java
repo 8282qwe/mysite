@@ -1,6 +1,7 @@
 package mysite.service;
 
 import jakarta.servlet.http.Cookie;
+import lombok.AllArgsConstructor;
 import mysite.repository.BoardRepository;
 import mysite.service.impl.BoardServiceImpl;
 import mysite.vo.BoardVo;
@@ -10,16 +11,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+@AllArgsConstructor
 @Service
 public class BoardService implements BoardServiceImpl {
     private final BoardRepository boardRepository;
 
     //한 페이지에 나오는 게시글의 수
     private final int PER_PAGE = 5;
-
-    public BoardService(BoardRepository boardRepository) {
-        this.boardRepository = boardRepository;
-    }
 
     @Override
     public void addContents(BoardVo boardVo) {

@@ -1,5 +1,6 @@
 package mysite.service;
 
+import lombok.AllArgsConstructor;
 import mysite.repository.GuestbookLogRepository;
 import mysite.repository.GuestbookRepository;
 import mysite.service.impl.GuestBookImpl;
@@ -9,15 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class GuestBookService implements GuestBookImpl {
     private final GuestbookRepository guestbookRepository;
     private final GuestbookLogRepository guestbookLogRepository;
-
-    public GuestBookService(GuestbookRepository guestbookRepository, GuestbookLogRepository guestbookLogRepository) {
-        this.guestbookRepository = guestbookRepository;
-        this.guestbookLogRepository = guestbookLogRepository;
-    }
 
     @Override
     public List<GuestbookVo> getContentsList() {

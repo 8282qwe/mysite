@@ -1,5 +1,6 @@
 package mysite.repository;
 
+import lombok.AllArgsConstructor;
 import mysite.vo.BoardVo;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -7,13 +8,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Map;
 
+@AllArgsConstructor
 @Repository
 public class BoardRepository {
     private final SqlSession sqlSession;
-
-    public BoardRepository(SqlSession sqlSession) {
-        this.sqlSession = sqlSession;
-    }
 
     public int countBoard(String keyword) {
         return sqlSession.selectOne("board.countBoard", keyword.isBlank() ? "" : "%" + keyword + "%");

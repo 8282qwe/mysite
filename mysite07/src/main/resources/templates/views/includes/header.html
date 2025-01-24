@@ -1,0 +1,41 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="ko">
+<script th:inline="javascript">
+	/*<![CDATA[*/
+	window.addEventListener('load', function () {
+		let anchors = document.querySelectorAll("#languages a");
+
+		anchors.forEach(function (el) {
+			el.addEventListener('click', function (e) {
+				e.preventDefault();
+				console.log(this.getAttribute('data-lang'));
+				document.cookie = "lang=" + this.getAttribute('data-lang') + "; path="+[[@{/}]]+"; max-age=" + (30 * 24 * 60 * 60) + ";"
+				location.href = [[@{/}]];
+			});
+		});
+	});
+	/*]]>*/
+</script>
+<div id="header">
+	<h1 th:text="${@sitevo?.title ?: 'Default Title'}"></h1>
+
+	<div id="languages">
+		<a href="" data-lang="ko" th:class="${lang != 'en' ? 'active' : ''}">KO</a><a href="" th:class="${lang == 'en'?'active':''}" data-lang="en">EN</a>
+	</div>
+	<ul>
+		<th:block sec:authorize="isAnonymous()">
+			<li><a th:href="@{/user/login}" th:text="#{header.gnb.login}"></a>
+			<li>
+			<li><a th:href="@{/user/join}" th:text="#{header.gnb.join}"></a>
+			<li>
+		</th:block>
+		<th:block sec:authorize="isAuthenticated()">
+			<li><a th:href="@{/user/update}" th:text="#{header.gnb.settings}"></a></li>
+			<li><a th:href="@{/user/logout}" th:text="#{header.gnb.logout}"></a></li>
+			<li>
+				<span th:text="#{header.gnb.greeting} + ' ' + ${#authentication.principal.name}"></span>
+			</li>
+		</th:block>
+
+	</ul>
+</div>
+</html>

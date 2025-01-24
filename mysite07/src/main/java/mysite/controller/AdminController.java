@@ -1,5 +1,6 @@
 package mysite.controller;
 
+import lombok.AllArgsConstructor;
 import mysite.service.FileUploadService;
 import mysite.service.SiteService;
 import mysite.vo.SiteVo;
@@ -11,16 +12,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
 
+@AllArgsConstructor
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
     private final FileUploadService fileUploadService;
     private final SiteService siteService;
-
-    public AdminController(FileUploadService fileUploadService, SiteService siteService) {
-        this.fileUploadService = fileUploadService;
-        this.siteService = siteService;
-    }
 
     @RequestMapping({"", "/", "/main"})
     public String index(Model model) {

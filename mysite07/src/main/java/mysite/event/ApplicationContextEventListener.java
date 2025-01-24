@@ -1,10 +1,10 @@
 package mysite.event;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import mysite.service.SiteService;
 import mysite.vo.SiteVo;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -12,13 +12,11 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+@AllArgsConstructor
 @Slf4j
 @Component
 public class ApplicationContextEventListener {
-    @Autowired
     private ApplicationContext applicationContext;
-
-    @Autowired
     private SiteService siteService;
 
     @EventListener({ContextRefreshedEvent.class})

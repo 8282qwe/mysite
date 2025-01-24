@@ -3,13 +3,14 @@ package mysite.security;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.AllArgsConstructor;
 import mysite.service.UserService;
 import mysite.vo.UserVo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+@AllArgsConstructor
 public class LoginInterceptor implements HandlerInterceptor {
-    @Autowired
+
     private UserService userService;
 
     @Override
@@ -22,7 +23,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (authUser == null) {
             request.setAttribute("email", email);
             request.setAttribute("result", "fail");
-            request.getRequestDispatcher("/WEB-INF/views/user/login.jsp").forward(request, response);
+            request.getRequestDispatcher("/user/login").forward(request, response);
 
             return false;
         }
