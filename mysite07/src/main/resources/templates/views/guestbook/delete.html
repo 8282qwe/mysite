@@ -3,14 +3,14 @@
 <head>
 <title>mysite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<link href="${pageContext.request.contextPath}/assets/css/guestbook.css" rel="stylesheet" type="text/css">
+<link th:href="@{/assets/css/guestbook.css}" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div id="container">
 		<th:block th:insert="~{includes/header}"></th:block>
 		<div id="content">
 			<div id="guestbook" class="delete-form">
-				<form method="post" th:action="@{/guestbook/delete/{id}}">
+				<form method="post" th:action="@{/guestbook/delete/{id}(id=${id})}">
 					<label>비밀번호</label>
 					<input type="password" name="password">
 					<input type="submit" value="확인">

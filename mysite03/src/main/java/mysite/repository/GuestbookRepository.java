@@ -28,6 +28,6 @@ public class GuestbookRepository {
     }
 
     public GuestbookVo findById(String id) {
-        return sqlSession.selectOne("guestbook.findById");
+        return sqlSession.selectOne("guestbook.findById",Long.parseLong(id));
     }
 }

@@ -56,9 +56,9 @@ public class BoardRepository {
         vo.setTitle(title);
         vo.setContents(contents);
         vo.setUser_id(user_id);
-        vo.setO_no(o_no);
+        vo.setO_no(o_no+1);
         vo.setG_no(g_no);
-        vo.setDepth(depth);
+        vo.setDepth(depth+1);
         sqlSession.insert("board.insertBoard", vo);
     }
 
